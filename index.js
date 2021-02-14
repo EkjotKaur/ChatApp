@@ -11,6 +11,8 @@ const io = socket(server, {
   }
 });
 
+const PORT = process.env.PORT || 5000;
+
 const {addUser, removeUser, getUser, getUsersInRoom} = require('./user');
 
 const route = require('./routes');
@@ -69,4 +71,4 @@ io.on('connection', (socket) => {
 //   res.send("HELLO WORLD!")
 // })
 
-server.listen(5000, () => console.log("Server running"));
+server.listen(PORT, () => console.log("Server running"));
