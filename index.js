@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socket = require('socket.io');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
@@ -14,7 +15,8 @@ const {addUser, removeUser, getUser, getUsersInRoom} = require('./user');
 
 const route = require('./routes');
 
-app.use(route)
+app.use(route);
+app.use(cors());
 
 // app.use('*', (req, res, next) => {
 //   res.header('Access-Control-Allow-Origin', '*');
