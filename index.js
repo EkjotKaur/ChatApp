@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 const {addUser, removeUser, getUser, getUsersInRoom} = require('./user');
 
 const route = require('./routes');
+const { use } = require('./routes');
 
 app.use(route);
 app.use(cors());
@@ -34,6 +35,9 @@ io.on('connection', (socket) => {
 
     if(error) return callback(error);
 
+    if(!user) return callback("Something Went Wrong");
+
+    if(!user.name || !user.room) return callback("Something Went Wrong");
 
     socket.emit('message', {user: 'admin', text: `${user.name}, welcome to the room ${user.room}`});
     socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name}, has joined`});
