@@ -49,6 +49,10 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
+    if(!user || !socket){
+      callback("Something Went Wrong.")
+    }
+
     io.to(user.room).emit('message', {user: user.name, text: message});
     io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)});
 
@@ -61,7 +65,7 @@ io.on('connection', (socket) => {
     const user = removeUser(socket.id);
 
     if(user){
-      io.to(user.name).emit('message', {user: 'admin', text: `${user.name} has left`})
+      io.to(user.room).emit('message', {user: 'admin', text: `${user.name} has left`})
     }
 
   })

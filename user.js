@@ -22,7 +22,7 @@ const addUser = ({ id, name, room }) => {
 
 const removeUser = (id) => {
   const index = users.findIndex((user) => {
-    console.log(user);
+    // console.log(user);
     return user.id === id;
   });
 
