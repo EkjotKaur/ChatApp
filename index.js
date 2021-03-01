@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
 
     if(!user) return callback("Something Went Wrong");
 
-    if(!user.name || !user.room) return callback("Something Went Wrong");
+    if(!user.name || !user.room || !socket || !socket.id) return callback("Something Went Wrong");
 
     socket.emit('message', {user: 'admin', text: `${user.name}, welcome to the room ${user.room}`});
     socket.broadcast.to(user.room).emit('message', {user: 'admin', text: `${user.name}, has joined`});
@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
   socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
-    if(!user || !socket){
+    if(!user || !socket || !user.room || !socket.id){
       callback("Something Went Wrong.")
     }
 
